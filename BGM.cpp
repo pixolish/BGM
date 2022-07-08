@@ -27,7 +27,7 @@ capture =false;
 cv::absdiff(bgmask,roi_gray,diff);
 threshold(roi_gray, thresh, 150, 255, THRESH_BINARY);
 findContours(thresh, contours, hierarchy, RETR_TREE, CHAIN_APPROX_NONE);
-if(contours.size()>5)
+if(contours.size()>10)
     capture=true;
 return capture;
 

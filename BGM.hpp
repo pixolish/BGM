@@ -14,9 +14,10 @@ public:
     BGM();
     void model(cv::Mat roi);
     bool capSample();
+    cv::Mat roi,fgmask,bgmask,diff,roi_gray,thresh;
 private:
     cv::Ptr<cv::BackgroundSubtractor> pBackSub;
-    cv::Mat roi,fgmask,bgmask,diff,roi_gray,thresh;
+    
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Vec4i>hierarchy;
     bool capture;

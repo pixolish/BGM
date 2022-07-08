@@ -2,6 +2,7 @@
 #include<opencv2/opencv.hpp>
 #include<iostream>
 #include<stdio.h>
+#include <chrono>
 
 using namespace std;
 using namespace cv;
@@ -20,21 +21,28 @@ BGM bgm;//
 
 int counter=0;
 while (true){
+         auto now = std::chrono::system_clock::now();
+         std::time_t end_time = std::chrono::system_clock::to_time_t(now);
+ 
+         //std::cout << "Current Time and Date: " << std::ctime(&end_time) << std::endl;
+         string time_stamp=std::ctime(&end_time);
+         string imgfile=time_stamp+".jpg";
          counter++;
          capture >> frame;
          if (frame.empty())
                    break;
          //provide the roi
-         roi=frame(Rect(25,30,350,400));
+         roi=frame(Rect(25,30,400,400));
          // apply the roi into bgm construction
          bgm.model(roi);
-         if((counter>100)&&(bgm.capSample()==true))
+         if((counter>500)&&(bgm.capSample()==true))
          {
              std::cout<<"capture the frame"<<bgm.capSample()<<std::endl;
-             cv::imwrite("sample.jpg",roi);
+             cv::imwrite(imgfile,roi);
          }
 
          imshow("Window",frame);
+         imshow("BGM",bgm.bgmask);
          waitKey(1);
 }
 
